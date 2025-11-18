@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: lowcoder-backend
+    root: server/api-service
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -Dspring.profiles.active=production -jar target/lowcoder-server-1.0-SNAPSHOT.jar
+    envVars:
+      - key: MONGODB_URI
+        value: <your-mongodb-uri>
+      - key: REDIS_URL
+        value: <your-redis-uri>
+      - key: PF4J_MODE
+        value: production
+
+  - type: static
+    name: lowcoder-frontend
+    root: client
+    buildCommand: npm install && npm run build
+    publishPath: build
